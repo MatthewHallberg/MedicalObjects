@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 from PIL import Image
 
 import cv2
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0)#use 1 for usb web cam
 
 from utils import label_map_util
 
@@ -70,9 +70,10 @@ with detection_graph.as_default():
           np.squeeze(scores),
           category_index,
           use_normalized_coordinates=True,
-          line_thickness=8)
+          line_thickness=8,
+          skip_scores=True)
 
-      cv2.imshow('object detection', cv2.resize(image_np, (800,600)))
+      cv2.imshow('object detection', cv2.resize(image_np, (720,480)))
       if cv2.waitKey(25) & 0xFF == ord('q'):
         cv2.destroyAllWindows()
         break

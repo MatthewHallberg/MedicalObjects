@@ -1,0 +1,49 @@
+INSTRUCTIONS: 
+
+Create anaconda environment with opencv
+Activate conda environment
+Take videos and convert to mp4 format
+Use videoToImage.py to convert video to images.
+Download and install this for labeling data in Pascal Voc format: https://github.com/tzutalin/labelImg
+(Keep all in same folder called images)
+Inside images folder COPY approx 10 pairs into Test folder and COPY the rest into Train folder
+run xml_to_csv.py
+Get dataset to TFRecord file format with generate_tfrecord.py
+Get config file from Tensorflow models-master repository:
+/tensorflow/models/research/master/object_detection/samples/configs/ssd_mobilenet_v1_pets.config
+Get the model file from Tensorflow run in terminal from main project directory and extract zip:
+wget http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_11_06_2017.tar.gz
+Create object-detection.pbxt in Training folder
+Move files into object_detection folder from models-master, put pet config file into training folder
+# From tensorflow/models/research/  run this:
+protoc object_detection/protos/*.proto --python_out=.
+# From tensorflow/models/research/
+export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim  
+run: 
+FINALLY from tensorflow/models/research/object_detection
+python3 train.py --logtosotderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_pets.config
+
+after training:
+python3 export_inference_graph.py \
+    --input_type image_tensor \
+    --pipeline_config_path training/ssd_mobilenet_v1_pets.config \
+    --trained_checkpoint_prefix training/model.ckpt-1128 \
+    --output_directory medical_objects_graph
+
+inside object_detection run:
+python3 run_detection.py
+
+
+IMPROVEMENTS: 
+-Downres training images to 600 pixels??
+-get training images in different light conditions and all angles!
+-do 200 images per object!
+-Train on google cloud and get to below 1 error (might be 10,000 steps)
+-run detector on GPU version of tensor flow (too many frame drops on my mac)
+
+
+
+
+
+
+

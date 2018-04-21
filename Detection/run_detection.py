@@ -5,6 +5,7 @@ import sys
 import tarfile
 import tensorflow as tf
 import zipfile
+import blocking
 
 from collections import defaultdict
 from io import StringIO
@@ -70,8 +71,13 @@ with detection_graph.as_default():
           np.squeeze(scores),
           category_index,
           use_normalized_coordinates=True,
-          line_thickness=8,
-          skip_scores=True)
+          line_thickness=8)
+      #check for blocking
+      blocking.check_blocking(
+        np.squeeze(boxes),
+        np.squeeze(classes).astype(np.int32),
+        np.squeeze(scores),
+        category_index)
 
       cv2.imshow('object detection', cv2.resize(image_np, (720,480)))
       if cv2.waitKey(25) & 0xFF == ord('q'):

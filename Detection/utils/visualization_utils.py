@@ -65,33 +65,17 @@ STANDARD_COLORS = [
 
 
 def save_image_array_as_png(image, output_path):
-  """Saves an image (represented as a numpy array) to PNG.
-
-  Args:
-    image: a numpy array with shape [height, width, 3].
-    output_path: path to which image should be written.
-  """
   image_pil = Image.fromarray(np.uint8(image)).convert('RGB')
   with tf.gfile.Open(output_path, 'w') as fid:
     image_pil.save(fid, 'PNG')
 
-
 def encode_image_array_as_png_str(image):
-  """Encodes a numpy array into a PNG string.
-
-  Args:
-    image: a numpy array with shape [height, width, 3].
-
-  Returns:
-    PNG encoded image string.
-  """
   image_pil = Image.fromarray(np.uint8(image))
   output = six.BytesIO()
   image_pil.save(output, format='PNG')
   png_string = output.getvalue()
   output.close()
   return png_string
-
 
 def draw_bounding_box_on_image_array(image,
                                      ymin,
@@ -536,11 +520,11 @@ def visualize_boxes_and_labels_on_image_array(
     keypoints=None,
     use_normalized_coordinates=False,
     max_boxes_to_draw=20,
-    min_score_thresh=.5,
+    min_score_thresh=.2,
     agnostic_mode=False,
     line_thickness=4,
     groundtruth_box_visualization_color='black',
-    skip_scores=False,
+    skip_scores=True,
     skip_labels=False):
   """Overlay labeled boxes on an image with formatted scores and label names.
 
@@ -554,7 +538,7 @@ def visualize_boxes_and_labels_on_image_array(
     boxes: a numpy array of shape [N, 4]
     classes: a numpy array of shape [N]. Note that class indices are 1-based,
       and match the keys in the label map.
-    scores: a numpy array of shape [N] or None.  If scores=None, then
+    scores: a numpy array of shape [N] or None. If scores=None, then
       this function assumes that the boxes to be plotted are groundtruth
       boxes and plot all boxes as black with no classes or scores.
     category_index: a dict containing category dictionaries (each holding

@@ -15,7 +15,7 @@ from matplotlib import pyplot as plt
 from PIL import Image
 
 import cv2
-cap = cv2.VideoCapture(0)#use 1 for usb web cam
+cap = cv2.VideoCapture(1)#use 1 for usb web cam
 
 from utils import label_map_util
 
@@ -74,14 +74,14 @@ with detection_graph.as_default():
           category_index,
           use_normalized_coordinates=True,
           line_thickness=8)
-      #check for blocking
-      blocking.check_blocking(
+            #check for moving
+      moving.check_moving(
         np.squeeze(boxes),
         np.squeeze(classes).astype(np.int32),
         np.squeeze(scores),
         category_index)
-      #check for moving
-      moving.check_moving(
+      #check for blocking
+      blocking.check_blocking(
         np.squeeze(boxes),
         np.squeeze(classes).astype(np.int32),
         np.squeeze(scores),

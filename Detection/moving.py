@@ -1,7 +1,7 @@
 import  send_message as message
 
 max_boxes_to_draw = 20
-min_score_thresh = .2
+min_score_thresh = .4
 hold_filter = 0
 empty_filter = 0
 curr_message = 'm-empty'
@@ -9,7 +9,7 @@ last_message = 'm-empty'
 is_holding = False
 #HACK: hardcoded sizes
 bottle_max = .03
-syringe_max = .2
+syringe_max = .15
 
 def check_moving(boxes,classes,scores,category_index):
 	new_object_list = []
@@ -28,7 +28,7 @@ def check_moving(boxes,classes,scores,category_index):
 
 #use when setting up a new workspace
 def get_sizes(sa,name):
-	if (name == 'syringe'):
+	if (name == 'bottle'):
 		print(sa)
 
 def check_for_holding_item(sa,name):
@@ -38,11 +38,11 @@ def check_for_holding_item(sa,name):
 	global hold_filter
 	global empty_filter
 	if (name == 'syringe' and sa > syringe_max):
-		curr_message = 'holding syringe'
+		curr_message = 'holding: syringe'
 		hold_filter += 1
 		empty_filter = 0
 	elif (name == 'bottle' and sa > bottle_max):
-		curr_message = 'holding bottle'
+		curr_message = 'holding: bottle'
 		hold_filter += 1
 		empty_filter = 0
 	else:

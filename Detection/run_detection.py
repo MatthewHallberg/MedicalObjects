@@ -6,6 +6,7 @@ import tarfile
 import tensorflow as tf
 import zipfile
 import blocking
+import moving
 
 from collections import defaultdict
 from io import StringIO
@@ -78,7 +79,13 @@ with detection_graph.as_default():
         np.squeeze(classes).astype(np.int32),
         np.squeeze(scores),
         category_index)
-
+      #check for moving
+      moving.check_moving(
+        np.squeeze(boxes),
+        np.squeeze(classes).astype(np.int32),
+        np.squeeze(scores),
+        category_index)
+      #show window
       cv2.imshow('object detection', cv2.resize(image_np, (720,480)))
       if cv2.waitKey(25) & 0xFF == ord('q'):
         cv2.destroyAllWindows()

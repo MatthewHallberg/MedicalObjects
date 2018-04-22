@@ -1,4 +1,5 @@
 import  send_message as message
+import moving
 
 class boxObject:
 	xMin = 0
@@ -8,8 +9,8 @@ class boxObject:
 
 max_boxes_to_draw = 20
 min_score_thresh = .2
-curr_message = 'empty'
-last_message = 'empty'
+curr_message = 'b-empty'
+last_message = 'b-empty'
 empty_filter = 0
 
 def check_blocking(boxes,classes,scores,category_index):
@@ -46,7 +47,10 @@ def check_blocking(boxes,classes,scores,category_index):
 		if (foundBlock == False):
 			empty_filter += 1
 			if(empty_filter > 3):
-				curr_message = 'empty'
+				curr_message = 'b-empty'
+	#if we are holding an object send a message that we arent blocking 
+	if (moving.is_holding == True):
+		curr_message = 'b-empty'
 	if (curr_message != last_message):
 		message.send_message(curr_message)
 		last_message = curr_message

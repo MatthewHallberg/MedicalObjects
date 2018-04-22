@@ -7,6 +7,7 @@ import tensorflow as tf
 import zipfile
 import blocking
 import moving
+import send_message as message
 
 from collections import defaultdict
 from io import StringIO
@@ -88,5 +89,6 @@ with detection_graph.as_default():
       #show window
       cv2.imshow('object detection', cv2.resize(image_np, (720,480)))
       if cv2.waitKey(25) & 0xFF == ord('q'):
+        messge.close_socket()
         cv2.destroyAllWindows()
         break

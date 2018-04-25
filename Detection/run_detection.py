@@ -15,13 +15,13 @@ from matplotlib import pyplot as plt
 from PIL import Image
 
 import cv2
-cap = cv2.VideoCapture(1)#use 1 for usb web cam
+cap = cv2.VideoCapture(0)#use 1 for usb web cam
 
 from utils import label_map_util
 
 from utils import visualization_utils as vis_util
 
-#        conda activate py35 && python3 run_detection.py
+#conda activate py35 && python3 run_detection.py
 
 # What model to download.
 MODEL_NAME = 'medical_objects_graph'

@@ -8,8 +8,8 @@ curr_message = 'm-empty'
 last_message = 'm-empty'
 is_holding = False
 #HACK: hardcoded sizes
-bottle_max = .03
-syringe_max = .15
+bottle_max = .05
+syringe_max = .2
 
 def check_moving(boxes,classes,scores,category_index):
 	new_object_list = []
@@ -28,7 +28,7 @@ def check_moving(boxes,classes,scores,category_index):
 
 #use when setting up a new workspace
 def get_sizes(sa,name):
-	if (name == 'bottle'):
+	if (name == 'syringe'):
 		print(sa)
 
 def check_for_holding_item(sa,name):
